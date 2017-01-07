@@ -1,0 +1,35 @@
+body { padding-top:30px;}
+
+.house-card {width: 33%; display: inline-block; horizontal-align:center; margin: 0 0.1% 0 0.1%;}
+
+.search-panel {width: 100%}
+
+.houses-main { margin-left: auto; margin-right: auto;}
+
+.house-card-title a{text-overflow: ellipsis;text-decoration: none;}
+
+.house-card-body {height:170px; width: 100%}
+
+.red{
+  color: red;
+}
+
+.green{
+  color: green;
+}
+
+.house-card-pic {float:left; margin-right: 10px;}
+.house-card-pic-exist {width:165px; height:120px;}
+.house-card-actions {float:right;cursor: pointer; cursor: hand;}
+.house-card-description {margin:5px 0px 5px 0px;}
+.house-card-ispro {margin-left: 5px}
+
+.search-panel-heading a{text-decoration: none;}
+
+.form-control , .form-control-ui-select{width: 225px;}
+
+.search-form-launcher {float:right;}
+
+.form-slider {width: 225px;}
+
+.ui-select-inline {display:inline-block; vertical-align:middle }

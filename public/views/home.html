@@ -1,0 +1,10 @@
+<div class="houses-main">
+	<ng-include src="'views/search_panel.html'"></ng-include>
+	<ng-include src="'views/stats_panel.html'"></ng-include>
+	<div>{{vm.houses.length}} résultats<div>
+	<div ng-repeat="house in vm.houses" class="house-card">
+		<ng-include src="'views/house_card.html'"></ng-include>
+	</div>
+</div>
+
+

@@ -1,0 +1,47 @@
+
+<div class="panel panel-primary">
+<div class="panel-heading">        
+<span class="house-card-title panel-title">
+	<i ng-if="house.isPro" class="house-card-ispro fa fa-building" title="isPro"></i>
+	<a href="{{house.link}}" target="_blank">{{house.title}} </a>
+	<span class="house-card-actions">
+		<i ng-if="house.pdf" class="house-card-pdf fa fa-file-pdf-o red" aria-hidden="true" ng-click="vm.openPdf(house._id)" title="Download PDF"></i>
+		<i class="house-card-ignore fa fa-ban" aria-hidden="true" ng-click="vm.removeHouse(house._id)" title="Remove"></i>
+	</span>
+</span>
+</div>
+<div class="panel-body house-card-body">
+		<div class="house-card-pic">
+			<img class="house-card-pic-exist" src="{{house.imageLink}}" ng-if="house.imageLink"/>
+			<span class="fa-stack fa-5x" ng-if="!house.imageLink">
+			  <i class="fa fa-camera fa-stack-1x"></i>
+			  <i class="fa fa-ban fa-stack-2x text-danger"></i>
+			</span>
+		</div>
+		<div class="house-card-details">
+			<div class="house-card-city">
+				{{house.city}}
+			</div>
+			<div class="house-card-price">
+				{{house.price}}€
+				<i class="fa fa-arrow-up red" aria-hidden="true" ng-if="house.price_up" title="Original price : {{house.price_init}}€"></i>
+				<i class="fa fa-arrow-down green" aria-hidden="true" ng-if="house.price_down" title="Original price : {{house.price_init}}€"></i>
+			</div>
+			<div class="house-card-surface">
+				{{house.surface}} m2
+			</div>
+			<div class="house-card-m2price">
+				{{house.m2price_last}} €/m2
+			</div>
+			<i ng-if="house.description" class="house-card-description fa fa-plus-circle fa-2x" aria-hidden="true" title="{{house.description}}"></i>
+
+		</div>
+</div>
+<div class="panel-footer">
+		<div class="house-card-footer">
+			Dernière vue le: {{house.date | date:"MM/dd/yyyy"}}
+			</div>
+		<div>
+			Paru depuis {{house.date_diff}}j
+		</div>
+</div>

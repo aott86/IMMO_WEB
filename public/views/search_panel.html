@@ -1,0 +1,106 @@
+<div class="search-panel">
+	<div class="panel panel-primary">
+		<div class="panel-heading" ng-click="vm.toggleSearchOpen()">
+			<span class="panel-title search-panel-heading">
+				<i ng_if="!vm.isSearchOpen" class="fa fa-plus" aria-hidden="true"></i>
+				<i ng_if="vm.isSearchOpen" class="fa fa-minus" aria-hidden="true"></i>
+				<a href="#">Critères de recherche</a>
+			</span>
+		</div>
+		<div uib-collapse="!vm.isSearchOpen">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Ville:</label>
+							<ui-select class="form-control-ui-select" theme="bootstrap" ng-model="vm.searchForm.city" title="Choose a city">
+								<ui-select-match allow-clear="true" placeholder="Select or search a city...">{{$select.selected}}</ui-select-match>
+								<ui-select-choices repeat="city in vm.citiesAvailable | filter: $select.search">
+								  <span ng-bind="city | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+						</div>
+							<div class="form-group swith-button-form">
+								<div><label>Emetteur</label></div>
+								<nz-toggle
+								  tri-toggle
+								  ng-model="vm.searchForm.isPro"
+								  tip-true="'Pro'"
+								  tip-false="'!Pro'"
+								  tip-null="'Tous'">
+								</nz-toggle>
+							</div>
+							
+							<div class="form-group swith-button-form">
+								<div><label>Prix</label></div>
+								<nz-toggle
+								  tri-toggle
+								  ng-model="vm.searchForm.priceStatus"
+								  tip-true="'Hausse'"
+								  tip-false="'Baisse'"
+								  tip-null="'Tous'"
+								  val-true="'up'"
+								  val-false="'down'"
+								  val-null="'all'">
+								</nz-toggle>
+							</div>
+						<div class="form-group swith-button-form">
+							<div><label>Supprimées</label></div>
+							<nz-toggle
+							  tri-toggle
+							  ng-model="vm.searchForm.deleteStatus"
+							  tip-true="'Oui'"
+							  tip-false="'Non'"
+							  tip-null="'Tous'">
+							</nz-toggle>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<div><label>Prix</label></div>
+							<div class="form-slider">
+								<rzslider
+									rz-slider-model="vm.searchForm.priceMin"
+									rz-slider-high="vm.searchForm.priceMax"></rzslider>
+							</div>
+						</div>
+						<div class="form-group">
+							<div><label>Surface</label></div>
+							<div class="form-slider">
+								<rzslider
+									rz-slider-model="vm.searchForm.surfaceMin"
+									rz-slider-high="vm.searchForm.surfaceMax"></rzslider>
+							</div>							
+						</div>
+						<div class="form-group">
+							<div><label>Prix au m2</label></div>
+							<div class="form-slider">
+								<rzslider
+									rz-slider-model="vm.searchForm.m2priceMin"
+									rz-slider-high="vm.searchForm.m2priceMax"></rzslider>
+							</div>							
+						</div>
+					</div>
+					<div class="col-md-4">
+					<div class="sort-form">
+						<div><label>Tri</label></div>
+						<ui-select class="ui-select-inline" theme="bootstrap" ng-model="vm.sortForm.field" title="Choose a field to sort">
+							<ui-select-match placeholder="Select or search a field...">{{$select.selected}}</ui-select-match>
+							<ui-select-choices repeat="field in vm.fields | filter: $select.search">
+							  <span ng-bind="field | highlight: $select.search"></span>
+							</ui-select-choices>
+						</ui-select>
+						<button class="btn btn-primary" ng-click="vm.sortForm.asc = !vm.sortForm.asc">{{vm.sortForm.asc ? 'ASC': 'DESC'}}</button>
+					</div>
+					</div>
+				</div>
+				<div class ="bottom-search-panel">
+					<div class="search-form-launcher">
+						<button type="button" class="btn btn-primary" ng-click="vm.launchSearch()">Search</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

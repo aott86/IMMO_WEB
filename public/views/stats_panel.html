@@ -1,0 +1,23 @@
+<div class="stats-panel">
+	<div class="panel panel-primary">
+		<div class="panel-heading" ng-click="vm.toggleStatsOpen()">
+			<span class="panel-title search-panel-heading">
+				<i ng_if="!vm.isStatsOpen" class="fa fa-plus" aria-hidden="true"></i>
+				<i ng_if="vm.isStatsOpen" class="fa fa-minus" aria-hidden="true"></i>
+				<a href="#">Statistiques</a>
+			</span>
+		</div>
+		<div uib-collapse="!vm.isStatsOpen">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-4">
+						Prix moyen : {{vm.avgM2price}} €/m2
+					</div>
+					<div class="col-md-4">
+						Durée parution moyenne : {{vm.avgPublishedDate}}j
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
