@@ -40,9 +40,14 @@ var ObjectId = require('mongoose').Types.ObjectId;
                 if (err)
                     res.send(err);
 			
-				var pdfId = new ObjectId(house.pdf);
-				var readstream = GridFS.createReadStream({_id: pdfId});
-				readstream.pipe(res);
+		    var filename = req.params.docId+".pdf"; 
+                    filename = encodeURIComponent(filename);
+                    res.setHeader('Content-disposition', 'inline; filename="' + filename + '"');
+                    res.setHeader('Content-type', 'application/pdf');
+            
+                    var pdfId = new ObjectId(house.pdf);
+		    var readstream = GridFS.createReadStream({_id: pdfId});
+		    readstream.pipe(res);
             });
 		});
 
