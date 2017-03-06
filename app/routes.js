@@ -80,16 +80,29 @@ var ObjectId = require('mongoose').Types.ObjectId;
 				filters = JSON.parse(decodeURIComponent(req.query.filters));
 			}
 			
-            House.aggregate(
-			[
-			{$match: filters},
-			{$project:{surface:1, price: {$ifNull:["$price_last","$price_init"]}}},
-			{$group:{_id:null, avgm2price:{$avg:{$divide: [ "$price", "$surface"]}}}}]).exec(function(err, stats) {
+            House.find(filters).exec(function(err, houses) {
                 if (err)
                     res.send(err);
-			
-				util.log('avgm2price: '+stats[0].avgm2price);
-                res.json(Number(stats[0].avgm2price.toFixed(0)));
+				var housesId = houses.map(function(house){
+					return house._id;
+				})
+				util.log('nbResults: '+houses.length);
+				House.aggregate(
+				[
+				{$match: {_id:{$in:housesId}}},
+				{$project:{surface:1, price: {$ifNull:["$price_last","$price_init"]}}},
+				{$group:{_id:null, avgm2price:{$avg:{$divide: [ "$price", "$surface"]}}}}]).exec(function(err, stats) {
+					if (err)
+						res.send(err);
+					else {
+						var avgm2price = 0;
+						if(stats != undefined && stats.length > 0){
+							avgm2price = Number(stats[0].avgm2price.toFixed(0));
+						}
+					}
+					util.log('avgm2price: '+avgm2price);
+					res.json(avgm2price);
+				});
             });
         });
 		
@@ -99,19 +112,30 @@ var ObjectId = require('mongoose').Types.ObjectId;
 			if(req.query.filters){
 				filters = JSON.parse(decodeURIComponent(req.query.filters));
 			}
-			
-            House.aggregate(
-			[
-			{$match: filters},
-			{$project:{date_last:1, date_init: 1}},
-			{$group:{_id:null, avgPubDate:{$avg:{ $subtract: [ "$date_last", "$date_init"]}}}}]).exec(function(err, stats) {
+			House.find(filters).exec(function(err, houses) {
                 if (err)
                     res.send(err);
-			
-				var daysDifference = Number((stats[0].avgPubDate/1000/60/60/24).toFixed(0));
-				util.log('avgPubDate: '+daysDifference);
-                res.json(daysDifference);
-            });
+				var housesId = houses.map(function(house){
+					return house._id;
+				})
+				util.log('nbResults: '+houses.length);
+				House.aggregate(
+				[
+				{$match: {_id:{$in:housesId}}},
+				{$project:{date_last:1, date_init: 1}},
+				{$group:{_id:null, avgPubDate:{$avg:{ $subtract: [ "$date_last", "$date_init"]}}}}]).exec(function(err, stats) {
+					if (err)
+						res.send(err);
+					else {					
+						var daysDifference = 0;
+						if(stats != undefined && stats.length > 0){
+							daysDifference = Number((stats[0].avgPubDate/1000/60/60/24).toFixed(0));
+						}
+						util.log('avgPubDate: '+daysDifference);
+						res.json(daysDifference);
+					}
+				});
+			});
         });
 		
         // frontend routes =========================================================
